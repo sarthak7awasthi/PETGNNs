@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  central-server:
+    build:
+      context: ../CentralServer
+      dockerfile: Dockerfile.central
+    ports:
+      - "5000:5000"
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  client-node-1:
+    build:
+      context: ../ClientNode
+      dockerfile: Dockerfile.client
+    ports:
+      - "5001:5001"
+    environment:
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - central-server
+
+  client-node-2:
+    build:
+      context: ../ClientNode
+      dockerfile: Dockerfile.client
+    ports:
+      - "5002:5001"
+    environment:
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - central-server
+
+  http-server:
+    build:
+      context: ../http_server
+      dockerfile: Dockerfile.http
+    ports:
+      - "3000:3000"
+    depends_on:
+      - central-server
