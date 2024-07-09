@@ -1,0 +1,11 @@
+.project-card {
+    border: 1px solid #ccc;
+    padding: 20px;
+    width: 200px;
+    cursor: pointer;
+  }
+  
+  .project-card:hover {
+    background-color: #f0f0f0;
+  }
+  
