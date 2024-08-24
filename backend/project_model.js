@@ -1,74 +1,112 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const { v4: uuidv4 } = require("uuid");
 
 const ProjectSchema = new mongoose.Schema({
-  name: {
+  projectId: {
     type: String,
-    required: true
+    default: uuidv4,
+    unique: true,
+  },
+  projectName: {
+    type: String,
+    required: true,
+  },
+  taskName: {
+    type: String,
+    required: true,
   },
   description: {
-    type: String
+    type: String,
+    required: true,
   },
-  createdDate: {
-    type: Date,
-    default: Date.now
+  dataType: {
+    type: String,
+    enum: ["Tabular", "Text", "Image", "Audio", "Time Series", "Graph"],
+    required: false,
   },
+  labels: {
+    type: String,
+    enum: ["Binary", "Multi-Class", "Regression"],
+    required: false,
+  },
+  preprocessingOptions: {
+    wordTokenization: { type: Boolean, default: false },
+    sentenceTokenization: { type: Boolean, default: false },
+    lowercasing: { type: Boolean, default: false },
+    removeStopwords: { type: Boolean, default: false },
+    stemmingLemmatization: { type: Boolean, default: false },
+    featureEngineering: {
+      type: String,
+      enum: ["TF-IDF", "Word Embeddings"],
+      required: false,
+    },
+  },
+  modelConfiguration: {
+    modelArchitecture: {
+      type: String,
+      enum: ["GNN", "CNN", "LSTM", "Custom"],
+      required: false,
+    },
+    customLayers: { type: String, required: false },
+    hyperparameters: {
+      learningRate: { type: Number, default: 0.001 },
+      batchSize: { type: Number, default: 32 },
+      numberOfEpochs: { type: Number, default: 10 },
+    },
+  },
+  trainingConfiguration: {
+    validationStrategy: {
+      type: String,
+      enum: ["Train-Validation-Test Split", "K-Fold Cross-Validation"],
+      required: false,
+    },
+    optimization: {
+      type: String,
+      enum: ["Adam", "SGD"],
+      required: false,
+    },
+    lossFunction: {
+      type: String,
+      enum: ["Binary Cross-Entropy", "Mean Squared Error"],
+      required: false,
+    },
+  },
+  evaluationMetrics: {
+    accuracy: { type: Boolean, default: false },
+    precision: { type: Boolean, default: false },
+    recall: { type: Boolean, default: false },
+    f1Score: { type: Boolean, default: false },
+    aucRoc: { type: Boolean, default: false },
+  },
+  collaborators: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
   status: {
     type: String,
-    enum: ['Active', 'Inactive'],
-    default: 'Active'
+    enum: ["Active", "Inactive", "Completed"],
+    default: "Active",
   },
-  collaborators: [{
+  privacyStatus: {
     type: String,
-    required: true
-  }],
-  taskType: {
-    type: String,
-    enum: ['Fake News Detection', 'Fraud Detection'],
-    required: true
+    enum: ["Private", "Public"],
+    default: "Private",
   },
-  gnnDetails: {
-    dataset: {
-      type: String
+  admin: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
-    architecture: {
-      type: String,
-      enum: ['GCN', 'GAT', 'GraphSAGE', 'Other']
-    },
-    hyperparameters: {
-      learningRate: Number,
-      epochs: Number,
-      batchSize: Number
-    },
-    performanceMetrics: {
-      accuracy: Number,
-      loss: Number
-    },
-    
-    isTrained: {
-      type: Boolean,
-      default: false
-    }
+  ],
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
   },
-  privacySettings: {
-    differentialPrivacyLevel: {
-      type: String,
-      enum: ['Low', 'Medium', 'High']
-    },
-    encryptionMethod: {
-      type: String,
-      enum: ['PHE', 'SHA-256', 'SHA3-256', 'BLAKE2b']
-    },
-    smpcProtocol: {
-      type: String,
-      enum: ['ABY', 'Cheetah', 'Naor-Pinkas OT', 'IKNP OT', 'KKRT OT', 'Secret-Shared Shuffle']
-    },
-    psiProtocol: {
-      type: String,
-      enum: ['ECDH-PSI', 'KKRT-PSI', 'Circuit-PSI']
-    }
-  }
 });
 
-const ProjectModel = mongoose.model('Project', ProjectSchema);
+const ProjectModel = mongoose.model("Project", ProjectSchema);
 
 module.exports = ProjectModel;

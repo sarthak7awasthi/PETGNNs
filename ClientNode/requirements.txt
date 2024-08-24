@@ -1,7 +1,0 @@
-tensorflow
-tensorflow-federated
-petace
-numpy
-pandas
-flask
-requests

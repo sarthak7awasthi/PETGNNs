@@ -1,57 +1,70 @@
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
-import { Container, Typography, TextField, Button, Box, Alert } from '@mui/material';
+import { useNavigate } from "react-router-dom";
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Box,
+  Alert,
+} from "@mui/material";
+import { signup } from "../requests/auth";
 
 function Signup() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError("Passwords do not match");
       return;
     }
     try {
-      const response = await fetch('http://localhost:3000/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password })
-      });
-
-      if (response.ok) {
-        navigate('/login');
-        console.log('Signup successful');
-      } else {
-        const data = await response.json();
-        setError(data.message || 'Signup failed');
-      }
+      await signup(email, password);
+      navigate("/login");
+      console.log("Signup successful");
     } catch (error) {
-      console.error('Error during signup:', error);
-      setError('Error during signup');
+      console.error("Error during signup:", error);
+      setError(error.message);
     }
   };
 
   const handleLoginRedirect = () => {
-    navigate('/login');
+    navigate("/login");
   };
 
   return (
-    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', bgcolor: '#f5f5f5' }}>
-      <Container maxWidth="sm" sx={{ textAlign: 'center' }}>
-        <Typography variant="h4" component="h1" gutterBottom sx={{fontWeight:700}}>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        bgcolor: "#f5f5f5",
+      }}
+    >
+      <Container maxWidth="sm" sx={{ textAlign: "center" }}>
+        <Typography
+          variant="h4"
+          component="h1"
+          gutterBottom
+          sx={{ fontWeight: 700 }}
+        >
           PPFGNN
         </Typography>
         <Typography variant="h5" component="h2" gutterBottom>
           Signup
         </Typography>
-        {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
           <TextField
             label="Email"
@@ -86,12 +99,16 @@ function Signup() {
             color="primary"
             fullWidth
             disabled={!email || !password || !confirmPassword}
-            sx={{ mt: 2, fontWeight: 'bold' }}
+            sx={{ mt: 2, fontWeight: "bold" }}
           >
             SIGNUP
           </Button>
         </Box>
-        <Button onClick={handleLoginRedirect} fullWidth sx={{ mt: 2, fontWeight: 'bold' }}>
+        <Button
+          onClick={handleLoginRedirect}
+          fullWidth
+          sx={{ mt: 2, fontWeight: "bold" }}
+        >
           ALREADY HAVE AN ACCOUNT? LOGIN
         </Button>
       </Container>
