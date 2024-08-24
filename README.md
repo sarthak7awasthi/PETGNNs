@@ -1,13 +1,16 @@
 # PETGNNs
 
-PPFGNN is a Graph Neural framework designed to perform federated learning while preserving privacy. This project integrates various privacy-preserving technologies such as Differential Privacy, Secure Multi-Party Computation (SMPC), Private Set Intersection (PSI), Homomorphic Encryption, and Sharding to ensure data confidentiality during collaborative training. PPFGNN is ideal for applications in fake news detection and fraud detection.
+PPFGNN is a Neural framework designed to perform federated learning while preserving privacy. This project integrates various privacy-preserving technologies such as Differential Privacy, Secure Multi-Party Computation (SMPC), Private Set Intersection (PSI), Homomorphic Encryption, and Sharding to ensure data confidentiality during collaborative training. PPFGNN is ideal for applications in fake news detection and fraud detection.
+
+
+**I have temporarily removed ML Backend which handles SMPC and Shamir's secret sharing.** I am upgrading the tech stack, and replacing tensorflow federated with PySyft and torch. There are many updates with the project. Will update the readme documentation soon.
 
 ## Table of Contents
 [Problem & Solution](https://github.com/sarthak7awasthi/PETGNNs#problem-&-solution)
 
 [System Achitecture](https://github.com/sarthak7awasthi/PETGNNs#system-architecture)
 
-[TikToks PETAce](https://github.com/sarthak7awasthi/PETGNNs#tiktoks-petace)
+[UI Screenshots](https://github.com/sarthak7awasthi/PETGNNs#ui-screenshots)
 
 [GNN Building Flow](https://github.com/sarthak7awasthi/PETGNNs#gnn-building-flow)
 
@@ -113,11 +116,13 @@ This way, both organizations benefit from a robust and accurate model without co
     - Inter-Client Communication: Coordination between clients during federated learning
     - Encryption: Ensuring all data transfers are encrypted end-to-end
 
-## TikToks PETAce
+## UI Screenshots
 
-I utilized TikTok's PETAce for a lot of the encryption covered in the project.
-I used TikTok's [PETAce-Solo](https://github.com/tiktok-privacy-innovation/PETAce-Solo) for hashing and partial homomorphic encryption. I wrote CPP wrapper functions to get the outcomes.
-I used the PETAce's [Python API](https://github.com/tiktok-privacy-innovation/PETAce/tree/main/python) for secureNumpy and SETOPS(PSI) support.
+![image](https://github.com/user-attachments/assets/89f42144-00ba-4447-b648-414e54521bfd)
+![image](https://github.com/user-attachments/assets/ca979653-6f97-4f53-89fb-47cc02596484)
+![image](https://github.com/user-attachments/assets/54eb1f80-4be1-4d0d-94eb-4e41ca57b125)
+![image](https://github.com/user-attachments/assets/3efe94ee-5a0e-442c-97f0-de4845f1a395)
+
 
 ## GNN Building Flow
 
