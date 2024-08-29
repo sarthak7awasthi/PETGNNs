@@ -1,6 +1,6 @@
 # PETGNNs
 
-PPFGNN is a Neural framework designed to perform federated learning while preserving privacy. This project integrates various privacy-preserving technologies such as Differential Privacy, Secure Multi-Party Computation (SMPC), Private Set Intersection (PSI), Homomorphic Encryption, and Sharding to ensure data confidentiality during collaborative training. PPFGNN is ideal for applications in fake news detection and fraud detection.
+PPFGNN is a Neural Network framework designed to perform federated learning while preserving privacy. This project integrates various privacy-preserving technologies such as Differential Privacy, Secure Multi-Party Computation (SMPC), Private Set Intersection (PSI), Homomorphic Encryption, and Sharding to ensure data confidentiality during collaborative training. PPFGNN is ideal for applications in fake news detection and fraud detection.
 
 
 **I have temporarily removed ML Backend which handles SMPC and Shamir's secret sharing.** I am upgrading the tech stack, and replacing tensorflow federated with PySyft and torch. There are many updates with the project. Will update the readme documentation soon.
